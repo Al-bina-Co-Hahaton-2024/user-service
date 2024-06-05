@@ -32,8 +32,7 @@ public class UserController {
             responses = {
                     @ApiResponse(
                             description = "ОК",
-                            responseCode = "200",
-                            content = @Content(schema = @Schema(implementation = User.class))
+                            responseCode = "200"
                     )
             }
     )
