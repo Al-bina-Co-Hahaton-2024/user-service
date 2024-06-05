@@ -43,10 +43,10 @@ public class UserRolesService {
     @Transactional
     public UserEntity deleteRoles(UUID userId, Collection<Role> roles) {
         final var entity = this.userService.getUserEntity(userId);
-        entity.getRoles().removeAll(roles);
         if (roles.contains(Role.DOCTOR)) {
             this.medicalClient.deleteDoctor(userId);
         }
+        entity.getRoles().removeAll(roles);
         return entity;
     }
 }
