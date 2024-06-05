@@ -5,6 +5,34 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.1.xsd">
 
-<!--    <changeSet id="001" author="alexander (bigtows) chapchuk">-->
-<!--    </changeSet>-->
+    <changeSet id="001" author="alexander (bigtows) chapchuk">
+        <createTable tableName="user">
+            <column name="id" type="uuid">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="login" type="varchar(200)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="password" type="varchar(200)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="first_name" type="varchar(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="middle_name" type="varchar(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_name" type="varchar(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="roles" type="varchar(30) []"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="002" author="alexander (bigtows) chapchuk">
+        <sql>
+            insert into public.user (id, login, password, first_name, middle_name, last_name, roles)
+            values ('97b000ef-cad4-4c2b-b1c4-dd9b16c73d78', 'admin',
+                    '$2a$12$2A3.EmbWcmeb66K.yLRK8uCmtaOrxsDU4h9n8mBvWvr0Yk8TQ9CDS', 'Bot', 'Another', 'Not', '{}');
+        </sql>
+    </changeSet>
 </databaseChangeLog>

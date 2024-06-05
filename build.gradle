@@ -33,7 +33,8 @@ repositories {
 
 ext {
     springDocVersion = "2.2.0"
-
+    mapStructVersion = '1.5.3.Final'
+    mapStructLombokVersion = '0.2.0'
 }
 
 dependencies {
@@ -46,6 +47,10 @@ dependencies {
     implementation "org.springdoc:springdoc-openapi-starter-webmvc-ui:$springDocVersion"
 
     implementation 'ru.albina:backlib:0.7.0'
+
+    implementation "org.mapstruct:mapstruct:$mapStructVersion"
+    annotationProcessor "org.projectlombok:lombok-mapstruct-binding:$mapStructLombokVersion"
+    annotationProcessor "org.mapstruct:mapstruct-processor:$mapStructVersion"
 
     implementation 'org.liquibase:liquibase-core'
 
