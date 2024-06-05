@@ -25,6 +25,6 @@ public class UserCreationService {
                         .setPassword(this.passwordEncoder.encode(userCreateDto.getPassword()))
         );
 
-        return this.userMapper.to(this.userRolesService.addRoles(entity.getId(), entity.getRoles()));
+        return this.userMapper.to(this.userRolesService.addRoles(entity.getId(), userCreateDto.getRoles()));
     }
 }
