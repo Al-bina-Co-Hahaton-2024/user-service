@@ -8,6 +8,7 @@ import ru.albina.user.configuration.MapperConfiguration;
 import ru.albina.user.domain.UserEntity;
 import ru.albina.user.dto.request.UserCreateDto;
 import ru.albina.user.dto.request.UserUpdateDto;
+import ru.albina.user.dto.response.SimpleUser;
 import ru.albina.user.dto.response.User;
 
 import java.util.UUID;
@@ -38,4 +39,9 @@ public interface UserMapper {
     @Mapping(target = "roles", ignore = true)
     @Mapping(target = "fullName", ignore = true)
     void update(@MappingTarget UserEntity user, UserUpdateDto userUpdateDto);
+
+    @Mapping(target = "fullName.first", source = "firstName")
+    @Mapping(target = "fullName.last", source = "lastName")
+    @Mapping(target = "fullName.middle", source = "middleName")
+    SimpleUser toSimple(UserEntity userEntity);
 }

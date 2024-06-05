@@ -11,9 +11,11 @@ import org.springframework.web.bind.annotation.RestController;
 import ru.albina.backlib.configuration.WebConstants;
 import ru.albina.backlib.configuration.auto.OpenApiConfiguration;
 import ru.albina.user.dto.request.UserFinder;
-import ru.albina.user.service.UserFindService;
+import ru.albina.user.dto.response.SimpleUser;
+import ru.albina.user.service.finder.UserFrontFinderService;
 
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 @RestController
@@ -21,7 +23,26 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class UserFinderController {
 
-    private final UserFindService userFindService;
+    private final UserFrontFinderService userFrontFinderService;
+
+
+    @Operation(
+            summary = "Поиск пользователя по ID",
+            security = @SecurityRequirement(name = OpenApiConfiguration.JWT),
+            responses = {
+                    @ApiResponse(
+                            description = "ОК",
+                            responseCode = "200"
+                    )
+            }
+    )
+    //TODO @PreAuthorize("hasAnyRole('ADMIN')")
+    @PostMapping("find-by-ids")
+    public List<SimpleUser> find(
+            @RequestBody Set<UUID> ids
+    ) {
+        return this.userFrontFinderService.find(ids);
+    }
 
     @Operation(
             summary = "Поиск пользователя",
@@ -38,6 +59,6 @@ public class UserFinderController {
     public List<UUID> find(
             @RequestBody UserFinder userFinder
     ) {
-        return this.userFindService.find(userFinder);
+        return this.userFrontFinderService.find(userFinder);
     }
 }
