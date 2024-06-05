@@ -34,4 +34,9 @@ public class UserService {
                 () -> new EntityNotFoundException("User with login " + login + " not found")
         );
     }
+
+    @Transactional
+    public void delete(UserEntity user) {
+        this.userRepository.delete(user);
+    }
 }

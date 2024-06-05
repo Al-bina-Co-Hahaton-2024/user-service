@@ -4,9 +4,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.albina.user.dto.response.User;
 import ru.albina.user.dto.request.UserCreateDto;
+import ru.albina.user.dto.response.User;
 import ru.albina.user.mapper.UserMapper;
+
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -26,5 +28,12 @@ public class UserCreationService {
         );
 
         return this.userMapper.to(this.userRolesService.addRoles(entity.getId(), userCreateDto.getRoles()));
+    }
+
+    @Transactional
+    public void delete(UUID id) {
+        final var user = this.userService.getUserEntity(id);
+        this.userRolesService.deleteRoles(id, user.getRoles());
+        this.userService.delete(user);
     }
 }

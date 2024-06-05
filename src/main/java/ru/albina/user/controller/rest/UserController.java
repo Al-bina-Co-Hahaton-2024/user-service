@@ -106,4 +106,22 @@ public class UserController {
     ) {
         this.userRolesService.deleteRole(id, userRoleModification.getRole());
     }
+
+    @Operation(
+            summary = "Удалить пользователя",
+            security = @SecurityRequirement(name = OpenApiConfiguration.JWT),
+            responses = {
+                    @ApiResponse(
+                            description = "ОК",
+                            responseCode = "200"
+                    )
+            }
+    )
+    //TODO @PreAuthorize("hasAnyRole('ADMIN')")
+    @DeleteMapping("{id}")
+    public void deleteUser(
+            @PathVariable("id") UUID id
+    ) {
+        this.userCreationService.delete(id);
+    }
 }
