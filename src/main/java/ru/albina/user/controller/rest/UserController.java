@@ -9,10 +9,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import ru.albina.backlib.configuration.WebConstants;
 import ru.albina.backlib.configuration.auto.OpenApiConfiguration;
+import ru.albina.backlib.model.security.LibPrincipal;
 import ru.albina.user.dto.request.UserCreateDto;
 import ru.albina.user.dto.request.UserRoleModification;
 import ru.albina.user.dto.response.User;
 import ru.albina.user.service.UserCreationService;
+import ru.albina.user.service.UserFrontService;
 import ru.albina.user.service.UserRolesService;
 
 import java.util.UUID;
@@ -25,6 +27,8 @@ public class UserController {
     private final UserCreationService userCreationService;
 
     private final UserRolesService userRolesService;
+
+    private final UserFrontService userFrontService;
 
     @Operation(
             summary = "Создать пользователя",
@@ -42,6 +46,23 @@ public class UserController {
             @RequestBody UserCreateDto userCreateDto
     ) {
         return this.userCreationService.create(userCreateDto);
+    }
+
+
+    @Operation(
+            summary = "Получить свои данные.",
+            security = @SecurityRequirement(name = OpenApiConfiguration.JWT),
+            responses = {
+                    @ApiResponse(
+                            description = "ОК",
+                            responseCode = "200",
+                            content = @Content(schema = @Schema(implementation = User.class))
+                    )
+            }
+    )
+    @GetMapping("/me")
+    public User getCurrentUser(LibPrincipal libPrincipal) {
+        return this.userFrontService.getById(libPrincipal.getPrincipal().id());
     }
 
 
