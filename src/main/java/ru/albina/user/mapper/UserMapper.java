@@ -18,6 +18,7 @@ public interface UserMapper {
     @Mapping(target = "lastName", source = "fullName.last")
     @Mapping(target = "middleName", source = "fullName.middle")
     @Mapping(target = "roles", ignore = true)
+    @Mapping(target = "fullName", ignore = true)
     UserEntity from(UserCreateDto dto);
 
     @Mapping(target = "fullName.first", source = "firstName")

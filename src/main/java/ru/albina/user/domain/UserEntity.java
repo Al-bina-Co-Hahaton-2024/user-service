@@ -10,6 +10,7 @@ import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
+import org.hibernate.annotations.Formula;
 import org.hibernate.annotations.Parameter;
 import org.hibernate.annotations.Type;
 
@@ -65,5 +66,8 @@ public class UserEntity {
     )
     @Column(name = "roles", columnDefinition = "_varchar")
     private Set<Role> roles = new HashSet<>();
+
+    @Formula(value = "concat(last_name, ' ', first_name, ' ', middle_name)")
+    private String fullName;
 
 }
