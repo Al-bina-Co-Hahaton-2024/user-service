@@ -45,6 +45,7 @@ public class UserAuthorizationService {
 
         return TokenData.builder()
                 .token(this.jwtGenerateService.generateToken(jwtData))
+                .roles(user.getRoles())
                 .expired(jwtData.expired())
                 .build();
     }
